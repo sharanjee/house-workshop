@@ -1,7 +1,7 @@
 apiVersion: ai.sap.com/v1alpha1
 kind: ServingTemplate
 metadata:
-  name: server-pipeline # executable ID, must be unique across your SAP AI Core instance, for example use `server-pipeline-yourname-1234`
+  name: server-pipeline-gs # executable ID, must be unique across your SAP AI Core instance, for example use `server-pipeline-yourname-1234`
   annotations:
     scenarios.ai.sap.com/description: "Learning to predict house price"
     scenarios.ai.sap.com/name: "House Price (Tutorial)"
@@ -10,7 +10,7 @@ metadata:
     artifacts.ai.sap.com/housepricemodel.kind: "model" # Suggest the kind of artifact to input.
   labels:
     scenarios.ai.sap.com/id: "learning-datalines"
-    ai.sap.com/version: "1.0"
+    ai.sap.com/version: "3.0"
 spec:
   inputs:
     artifacts:
@@ -30,12 +30,12 @@ spec:
     spec: |
       predictor:
         imagePullSecrets:
-          - name: hello-aicore-code    # your docker registry secret
+          - name: credstutorialrepo   # your docker registry secret
         minReplicas: 1
         maxReplicas: 5    # how much to scale
         containers:
-        - name: kfserving-container
-          image: "docker.io/sharanjee/house-server:01"
+        - name: kserve-container
+          image: "docker.io/<YOUR_DOCKER_USERNAME>/house-server:01"
           ports:
             - containerPort: 9001    # customizable port
               protocol: TCP
