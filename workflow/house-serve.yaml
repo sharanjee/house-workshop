@@ -35,7 +35,7 @@ spec:
         maxReplicas: 5    # how much to scale
         containers:
         - name: kfserving-container
-          image: "docker.io/sharanjee/house-price:01"
+          image: "docker.io/sharanjee/house-server:01"
           ports:
             - containerPort: 9001    # customizable port
               protocol: TCP
