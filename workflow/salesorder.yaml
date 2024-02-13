@@ -10,14 +10,14 @@ metadata:
     artifacts.ai.sap.com/housepricemodel.kind: "model" # Suggest the kind of artifact to input.
   labels:
     scenarios.ai.sap.com/id: "customer-salesorder01"
-    ai.sap.com/version: "4.0"
+    ai.sap.com/version: "4.1"
 spec:
   inputs:
     artifacts:
       - name: housepricemodel # placeholder name, do not add `-` in value use only alphanumeric chars
     parameters:
-      - name: greetmessage # placeholder name
-        type: string # required for every parameters
+      - name: greetmessage # placeholder name; CURRENTLY UNUSED
+        type: string # required for every parameters 
   template:
     apiVersion: "serving.kserve.io/v1beta1"
     metadata:
@@ -43,3 +43,6 @@ spec:
           args:
             - >
               set -e && echo "Starting" && gunicorn --chdir /app/src main:app -b 0.0.0.0:9001 # filename `main` flask variable `app`
+          env:
+            - name: STORAGE_URI # Required
+              value: "{{inputs.artifacts.housepricemodel}}" # MUST Required reference from artifact name, see above
